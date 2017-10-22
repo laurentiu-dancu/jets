@@ -4,13 +4,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  },
-  resolve: {
-    alias: {
-      js: path.resolve(__dirname, 'src', 'js')
-    },
-    extensions: ['.js']
+    path: path.resolve(__dirname, 'build')
   },
   module: {
     rules: [
@@ -25,6 +19,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader"
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
       }
     ]
   }

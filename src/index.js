@@ -1,8 +1,11 @@
-require('js/WaterShader');
+require('./js/WaterShader');
 import * as THREE from 'three';
-import { OrbitControls } from 'js/controls/OrbitControls';
-import * as Detector from 'js/Detector';
-let Stats = require('js/libs/stats.min');
+import { OrbitControls } from './js/controls/OrbitControls';
+import * as Detector from './js/Detector';
+let Stats = require('./js/libs/stats.min');
+import './css/style.css';
+import Sky from './images/skyboxsun25degtest.png';
+import Water from './images/waternormals.jpg';
 
 if (!Detector.webgl) {
   Detector.addGetWebGLMessage();
@@ -51,7 +54,7 @@ function init() {
   light.position.set(-1, 1, -1);
   scene.add(light);
   //
-  waterNormals = new THREE.TextureLoader().load('textures/waternormals.jpg');
+  waterNormals = new THREE.TextureLoader().load(Water);
   waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
   water = new THREE.Water(renderer, camera, scene, {
     textureWidth: 512,
@@ -75,7 +78,7 @@ function init() {
   let cubeMap = new THREE.CubeTexture([]);
   cubeMap.format = THREE.RGBFormat;
   let loader = new THREE.ImageLoader();
-  loader.load('textures/skyboxsun25degtest.png', function (image) {
+  loader.load(Sky, function (image) {
     let getSide = function (x, y) {
       let size = 1024;
       let canvas = document.createElement('canvas');
