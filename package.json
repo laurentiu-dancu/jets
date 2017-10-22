@@ -1,6 +1,6 @@
 {
   "name": "jets",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "jets lol",
   "main": "src/index.js",
   "dependencies": {
@@ -21,9 +21,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/novaftl/jets.git"
+    "url": "git+ssh://git@github.com/novaFTL/jets/t"
   },
-  "author": "",
+  "author": "novaFTL",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/novaftl/jets#readme"
+  "homepage": "https://github.com/novaFTL/jets"
 }
