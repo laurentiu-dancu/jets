@@ -7,9 +7,9 @@
  * @author Jonas Wagner / http://29a.ch/ && http://29a.ch/slides/2012/webglwater/ : Water shader explanations in WebGL
  */
 
-let THREE = require('three');
+import * as THREE from 'three';
 
-THREE.Water = function ( renderer, camera, scene, options ) {
+export function Water ( renderer, camera, scene, options ) {
 
 	THREE.Object3D.call( this );
 	this.name = 'water_' + this.id;
@@ -212,10 +212,10 @@ THREE.Water = function ( renderer, camera, scene, options ) {
 
 };
 
-THREE.Water.prototype = Object.create( THREE.Object3D.prototype );
-THREE.Water.prototype.constructor = THREE.Water;
+Water.prototype = Object.create( THREE.Object3D.prototype );
+Water.prototype.constructor = Water;
 
-THREE.Water.prototype.render = function () {
+Water.prototype.render = function () {
 
 	if ( this.matrixNeedsUpdate ) this.updateTextureMatrix();
 
@@ -243,7 +243,7 @@ THREE.Water.prototype.render = function () {
 };
 
 
-THREE.Water.prototype.updateTextureMatrix = function () {
+Water.prototype.updateTextureMatrix = function () {
 
 	this.updateMatrixWorld();
 	this.camera.updateMatrixWorld();

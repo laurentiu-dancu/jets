@@ -37,8 +37,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['build']),
     new HtmlWebpackPlugin({
-      title: 'jets | novaFTL',
-      template: 'src/templates/index.ejs'
+      template: 'src/templates/index.html'
     })
   ]
 };
