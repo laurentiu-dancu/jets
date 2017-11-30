@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import * as Detector from './js/Detector';
 import { OrbitControls } from './js/controls/OrbitControls';
 import { Water } from './js/WaterShader'
+import { SkyBoxBuilder } from './js/SkyBoxBuilder'
 import './css/style.css';
 import Sky from './images/skyboxsun25degtest.png';
 import WaterTexture from './images/waternormals.jpg';
@@ -81,41 +82,8 @@ class Program {
     mirrorMesh.rotation.x = -Math.PI * 0.5;
     scene.add(mirrorMesh);
 
-    let cubeMap = new THREE.CubeTexture([]);
-    cubeMap.format = THREE.RGBFormat;
-    let loader = new THREE.ImageLoader();
-    loader.load(Sky, function (image) {
-      let getSide = function (x, y) {
-        let size = 1024;
-        let canvas = document.createElement('canvas');
-        canvas.width = size;
-        canvas.height = size;
-        let context = canvas.getContext('2d');
-        context.drawImage(image, -x * size, -y * size);
-        return canvas;
-      };
-      cubeMap.images[0] = getSide(2, 1); // px
-      cubeMap.images[1] = getSide(0, 1); // nx
-      cubeMap.images[2] = getSide(1, 0); // py
-      cubeMap.images[3] = getSide(1, 2); // ny
-      cubeMap.images[4] = getSide(1, 1); // pz
-      cubeMap.images[5] = getSide(3, 1); // nz
-      cubeMap.needsUpdate = true;
-    });
-    let cubeShader = THREE.ShaderLib['cube'];
-    cubeShader.uniforms['tCube'].value = cubeMap;
-    let skyBoxMaterial = new THREE.ShaderMaterial({
-      fragmentShader: cubeShader.fragmentShader,
-      vertexShader: cubeShader.vertexShader,
-      uniforms: cubeShader.uniforms,
-      depthWrite: false,
-      side: THREE.BackSide
-    });
-    let skyBox = new THREE.Mesh(
-      new THREE.BoxGeometry(1000000, 1000000, 1000000),
-      skyBoxMaterial
-    );
-    scene.add(skyBox);
+    let skyBoxBuilder = new SkyBoxBuilder(Sky);
+    scene.add(skyBoxBuilder.getSkyBox());
     //
     let geometry = new THREE.IcosahedronGeometry(400, 4);
     let i = 0, j = geometry.faces.length;
@@ -125,7 +93,6 @@ class Program {
     let material = new THREE.MeshPhongMaterial({
       vertexColors: THREE.FaceColors,
       shininess: 100,
-      envMap: cubeMap
     });
     this.sphere = new THREE.Mesh(geometry, material);
     let sphere = this.sphere;
@@ -134,7 +101,7 @@ class Program {
     this.stats = new Stats();
     container.appendChild(this.stats.dom);
     //
-    window.addEventListener('resize', this.onWindowResize, false);
+    window.addEventListener('resize', this.onWindowResize.bind(this), false);
   }
 
   onWindowResize() {
