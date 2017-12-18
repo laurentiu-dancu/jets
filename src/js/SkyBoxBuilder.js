@@ -10,7 +10,7 @@ export class SkyBoxBuilder {
     this.updateMaterial();
   }
 
-  getSkyBox() {
+  buildSkyBox() {
     return new THREE.Mesh(
       new THREE.BoxGeometry(1000000, 1000000, 1000000),
       this.cubeMaterial

@@ -39,7 +39,7 @@ export function Water ( renderer, camera, scene, options ) {
 	this.fog = optionalParameter( options.fog, false );
 
 	this.renderer = renderer;
-	this.scene = scene;
+	this.wateryScene = scene;
 	this.mirrorPlane = new THREE.Plane();
 	this.normal = new THREE.Vector3( 0, 0, 1 );
 	this.mirrorWorldPosition = new THREE.Vector3();
@@ -221,7 +221,7 @@ Water.prototype.render = function () {
 
 	this.matrixNeedsUpdate = true;
 
-	// Render the mirrored view of the current scene into the target texture
+	// Render the mirrored view of the current wateryScene into the target texture
 	var scene = this;
 
 	while ( scene.parent !== null ) {
